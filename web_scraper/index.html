@@ -11,10 +11,7 @@
 </head>
 <body>
 <header>
-    <h1>Python job offers in Sofia, Bulgaria</h1>
-	<div id="scraper">
-	    <p>job scraper</p>
-	</div>
+    <h1>Current Python job offers in Sofia, Bulgaria</h1>
 </header>
 <main>
     {% for offer in offers %}
@@ -23,10 +20,9 @@
         <h2>{{ key }}</h2>
         {% for i in value %}
         {% if "http" in i %}
-        <a class="underline--magical" href="{{ i }}"> {{ i }} </a>
+        <a>{{ i }} </a>
         {% else %}
-        <p> {{ i }} </p>
-		{% endif %}
+        <p>{{ i }} </p>
         {% endfor %}
     </div>
     {% endfor %}

@@ -20,6 +20,6 @@ from django.urls import path
 
 
 urlpatterns = [
-    path(r'^admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     url(r'', include('web_scraper.urls')),
 ]
