@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Python Job Listings</title>
+    <meta charset="utf-8" />
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,100' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type='text/css'>   
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/png" href="mustache-th-pink-32.png">
+  </head>
+  <body>
+    <header>
+    <h1>Blog Posts</h1>
+    </header>
+      <main>	    
+	      {% for post in posts %}
+		  <div>
+              <p>created: {{ post.created_date }}</p>
+             <h2><a href="">{{ post.title }}</a></h2>
+             <p>{{ post.text|linebreaksbr }}</p>
+		  </div>
+          {% endfor %}        
+      </main>
+    <script src="start.py"></script>
+    <script src="scraping.py"></script>
+  </body>
+</html>

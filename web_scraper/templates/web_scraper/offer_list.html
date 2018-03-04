@@ -1,0 +1,39 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Python Job Listings</title>
+    <meta charset="utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,100' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/mustache-th-pink-32.png' %}">
+</head>
+<body>
+<header>
+    <h1>Python job offers in Sofia, Bulgaria</h1>
+	<div id="scraper">
+	    <p>job scraper</p>
+	</div>
+</header>
+<main>
+    {% for offer in offers %}
+    {% for key, value in offer.items %}
+    <div class="offer">
+        <h2>{{ key }}</h2>
+        {% for i in value %}
+        {% if "http" in i %}
+        <a class="underline--magical" href="{{ i }}"> {{ i }} </a>
+        {% else %}
+        <p> {{ i }} </p>
+		{% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+    {% endfor %}
+</main>
+<footer>
+    <div></div>
+</footer>
+</body>
+</html>
