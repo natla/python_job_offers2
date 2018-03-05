@@ -55,7 +55,7 @@ main {
     margin: 0 auto;
 }
 	
-div.offer{
+div.offer {
 	margin-top: 40px;
 }
 
@@ -71,6 +71,10 @@ div.offer{
     border: 2px solid whitesmoke;
     border-right: 0;
     padding: 0 10px;
+}
+
+footer {
+	margin-bottom: 40px;
 }
 
 /*================================================
