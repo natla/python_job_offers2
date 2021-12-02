@@ -1,39 +1,39 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Python Job Listings</title>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,100' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type='text/css'>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}">
 </head>
+
 <body>
-<header>
-    <h1>Python job offers</h1>
-	<div id="scraper">
-	    <p>Sofia, Bulgaria</p>
-	</div>
-</header>
-<main>
-    {% for offer in offers %}
-    {% for key, value in offer.items %}
-    <div class="offer">
-        <h2>{{ key }}</h2>
-        {% for i in value %}
-        {% if "http" in i %}
-        <a class="underline--magical" href="{{ i }}"> {{ i }} </a>
-        {% else %}
-        <p> {{ i }} </p>
-		{% endif %}
+    <header>
+        <h1>Python job offers</h1>
+        <div id="scraper">
+            <p>Sofia, Bulgaria</p>
+        </div>
+    </header>
+    <main>
+        {% for offer in offers %}
+        {% for key, value in offer.items %}
+        <div class="offer">
+            <h2>{{ key }}</h2>
+            {% for i in value %}
+            <p> {{ i.0 }} </p>
+            <a class="underline--magical" href="{{ i.1 }}"> {{ i.1 }} </a>
+            {% endfor %}
+        </div>
         {% endfor %}
-    </div>
-    {% endfor %}
-    {% endfor %}
-</main>
-<footer>
-    <div></div>
-</footer>
+        {% endfor %}
+    </main>
+    <footer>
+        <div></div>
+    </footer>
 </body>
+
 </html>
