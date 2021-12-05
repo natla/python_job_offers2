@@ -1,7 +1,19 @@
-*.pyc
-*~
-__pycache__
+# MacOS
+.DS_Store
+
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Log files
+*.log
+
+# Virtual environment
 myvenv
+
+# DB and static files
 db.sqlite3
 /static
-.DS_Store
+
+# PyCharm
+.idea/
