@@ -1,3 +1,4 @@
+import logging
 from typing import Dict, List, Set, Tuple
 
 import requests
@@ -5,6 +6,13 @@ from bs4 import BeautifulSoup as Soup
 
 HOST = 'https://www.jobs.bg/'
 PATH = 'front_job_search.php'
+
+logging.basicConfig(
+    filename='scraping.log',
+    level=logging.WARNING,
+    format='[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
+    datefmt='%H:%M:%S'
+)
 
 
 def get_results_on_page(scraped_url: str) -> Dict[str, Set[Tuple[str, str]]]:
@@ -45,7 +53,7 @@ def print_jobs(limit: int = None) -> List[dict]:
             if result:
                 results.append(result)
         except ImportError as e:
-            print("Page couldn't load properly: ", e)
+            logging.error("Page couldn't load properly: %s" % e)
 
     return results
 
