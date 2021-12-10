@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup as Soup
 
 HOST = 'https://www.jobs.bg/'
 PATH = 'front_job_search.php'
+CONTAINER_CLASS = 'mdc-layout-grid__inner'
+JOB_LINK_CLASS = 'black-link-b'
+COMPANY_LINK_CLASS = 'job-list-company-section'
 
 logging.basicConfig(
     filename='scraping.log',
@@ -21,18 +24,19 @@ def get_results_on_page(scraped_url: str) -> Dict[str, Set[Tuple[str, str]]]:
     soup = Soup(scraped_url, 'lxml')
     results_dict = {}
 
-    for search_result_row in soup.find_all('tr'):
+    for search_result_row in soup.find_all('div', class_=CONTAINER_CLASS):
 
-        job_link = search_result_row.find('a', class_='card__title')
-        company_link = search_result_row.find('a', class_='company_link')
-        if job_link and 'Python' in job_link.text:
-            job_description = job_link.text
-            company_description = company_link.text
+        job_link = search_result_row.find('a', class_=JOB_LINK_CLASS)
+        company_link = search_result_row.find('div', class_=COMPANY_LINK_CLASS)
+        if job_link and 'Python' in job_link['title']:
+            job_description = job_link['title']
+            if company_link:
+                company_description = company_link.find('a')['title']
             link = job_link['href']
             if job_description not in results_dict:
-                results_dict[job_description] = {(company_description, HOST + link)}
+                results_dict[job_description] = {(company_description, link)}
             else:
-                results_dict[job_description].add((company_description, HOST + link))
+                results_dict[job_description].add((company_description, link))
 
     return results_dict
 
@@ -47,13 +51,14 @@ def print_jobs(limit: int = None) -> List[dict]:
 
     for i in range(limit):
         scraped_url = f'{HOST}{PATH}?frompage={i * 15}&location_sid=1&keywords%5B0%5D=python'
+        print(scraped_url)
         try:
             request = requests.get(scraped_url).text
             result = get_results_on_page(request)
-            if result:
+            if result and result not in results:
                 results.append(result)
         except ImportError as e:
-            logging.error("Page couldn't load properly: %s" % e)
+            logging.error("Page couldn't load properly: %s", e)
 
     return results
 
