@@ -8,11 +8,11 @@ HOST = 'https://www.jobs.bg/'
 PATH = 'front_job_search.php'
 CONTAINER_CLASS = 'mdc-layout-grid__inner'
 JOB_LINK_CLASS = 'black-link-b'
-COMPANY_LINK_CLASS = 'job-list-company-section'
+COMPANY_LINK_CLASS = 'right'
 
 logging.basicConfig(
     filename='scraping.log',
-    level=logging.WARNING,
+    level=logging.INFO,
     format='[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
     datefmt='%H:%M:%S'
 )
@@ -25,33 +25,29 @@ def get_results_on_page(scraped_url: str) -> Dict[str, Set[Tuple[str, str]]]:
     results_dict = {}
 
     for search_result_row in soup.find_all('div', class_=CONTAINER_CLASS):
-
         job_link = search_result_row.find('a', class_=JOB_LINK_CLASS)
         company_link = search_result_row.find('div', class_=COMPANY_LINK_CLASS)
+
         if job_link and 'Python' in job_link['title']:
+            company_description = company_link.find('a')['title'] if company_link and company_link.find('a') else ''
             job_description = job_link['title']
-            if company_link:
-                company_description = company_link.find('a')['title']
             link = job_link['href']
-            if job_description not in results_dict:
-                results_dict[job_description] = {(company_description, link)}
-            else:
-                results_dict[job_description].add((company_description, link))
+
+            results_dict[job_description] = results_dict.get(
+                job_description, {(company_description, link)}).union({(company_description, link)})
 
     return results_dict
 
 
-def print_jobs(limit: int = None) -> List[dict]:
+def print_jobs(limit: int = 3) -> List[dict]:
     """Construct urls for scrapping in the range of the limit parameter,
     get the results on the page and return them as a list of dictionaries.
     """
-    if limit is None:
-        limit = 3
     results = []
 
     for i in range(limit):
         scraped_url = f'{HOST}{PATH}?frompage={i * 15}&location_sid=1&keywords%5B0%5D=python'
-        print(scraped_url)
+
         try:
             request = requests.get(scraped_url).text
             result = get_results_on_page(request)
