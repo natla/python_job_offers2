@@ -13,7 +13,7 @@ myvenv
 
 # DB and static files
 db.sqlite3
-/static
+/staticfiles
 
 # PyCharm
 .idea/
