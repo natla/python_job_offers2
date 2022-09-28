@@ -1,11 +1,14 @@
-from django.conf.urls import url
-from . import views
-from scraper import settings
+from django.urls import path
+from django.views.static import serve
 
-urlpatterns = [url(r'^$', views.offer_list, name='offer_list'),  # this is the home page
-               url(r'^post/(\d+)/$', views.post_list, name='post_list'),
-               ]
+from scraper import settings
+from . import views
+
+urlpatterns = [
+    path('', views.offer_list, name='offer_list'),  # this is the home page
+]
+
 if not settings.DEBUG:
-    urlpatterns += (
-        (r'^static/(?P.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-    )
+    urlpatterns += [
+        path('static/', serve, {'document_root': settings.STATIC_ROOT}),
+    ]

@@ -22,10 +22,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'so=5x1w7ikgxzy9*p(@y5*+%%%ovn(2z0*405a90_0*%9n+mh5'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'python-job-offers.herokuapp.com', '.pythonanywhere.com']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'python-job-offers.herokuapp.com',
+    'python-job-offers.fly.dev'
+]
 
 # Application definition
 
@@ -120,20 +124,3 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    "/web_scraper/static",
-)
-
-# List of finder classes that know how to find static files in
-# various locations.
-# STATICFILES_FINDERS = (
-#     'django.contrib.staticfiles.finders.FileSystemFinder',
-#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
-#     # 'compressor.finders.CompressorFinder',
-# )
