@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.7
+ARG PYTHON_VERSION=3.9
 
 FROM python:${PYTHON_VERSION}
 
@@ -16,13 +16,13 @@ RUN mkdir -p /app
 WORKDIR /app
 
 COPY requirements.txt .
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 COPY . .
 
 RUN python manage.py migrate
 RUN python manage.py collectstatic --noinput
-
 
 EXPOSE 8080
 
