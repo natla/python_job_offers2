@@ -9,12 +9,11 @@ __pycache__/
 *.log
 
 # Virtual environment
-myvenv
-venv
+myvenv/
+venv/
 
-# DB and static files
+# Local DB files
 db.sqlite3
-staticfiles/
 
 # PyCharm
 .idea/
