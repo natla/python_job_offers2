@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.static import serve
 
-from scraper import settings
+from config import settings
 from . import views
 
 urlpatterns = [
